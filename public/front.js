@@ -1,4 +1,4 @@
-const backendURL = 'http://localhost:3000';
+const backendURL = 'aips-hsp.com';
 
 //============================= Loader Functions =============================
 function showLoading() {
