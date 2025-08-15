@@ -1,4 +1,5 @@
-const backendURL = 'www.aips-hsp.com';
+const backendURL = 'https://aips-cizk.onrender.com';
+
 
 //============================= Loader Functions =============================
 function showLoading() {
