@@ -1,0 +1,28 @@
+.hero-lower {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 30px 10px; /* increased top and bottom padding */
+    background: #f8f8f8;
+    display: flex;               /* add flex for centering */
+    justify-content: center;     /* center horizontally */
+}
+
+.scroll-container {
+    display: flex;
+    gap: 15px; /* slightly increased gap for better spacing */
+}
+
+.scroll-container img {
+    max-height: 200px;
+    width: auto;
+    border-radius: 8px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.scroll-container img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}

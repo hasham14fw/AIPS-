@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIPS - Allama Iqbal Public School</title>
+    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="Responsive.css">
+    <link rel="stylesheet" href="Other.css">
+    <link rel="icon" href="Photoes/School Logo.png" type="image/png">
+</head>
+<body>
+  <main>
+
+    <!-- =================== Top Bar =================== -->
+    <div class="top-bar">
+        <div class="contact-info">
+            <h1>Mr. Zafar Iqbal (Director)</h1>
+        </div>
+
+        <!-- Hamburger for Portal Sidebar -->
+        <button class="hamburger" id="portal-hamburger">&#9776;</button>
+
+        <!-- Portal Links (Desktop) -->
+    </div>
+
+    <!-- =================== Portal Sidebar =================== -->
+    <div class="portal-sidebar" id="portal-sidebar">
+            <a href="stu_das.html">DASHBOARD</a>
+            <a href="#">MARKS</a>
+            <a href="Stu_att.html">ATTENDANCE</a>
+            <a href="https://drive.google.com/drive/folders/1hK3dk3VHyIlaujTZi7t2MjAo6Ck4juXc?usp=sharing">E-LIBRARY</a>
+        <button class="admissions-btn" onclick="logout()">LOGOUT</button>
+    </div>
+
+    <!-- =================== Header =================== -->
+    <div class="header">
+        <!-- Logo linking to Home -->
+        <a>
+            <img src="Photoes/School Logo.png" alt="Logo" width="90" height="90">
+        </a>
+
+        <!-- School Name -->
+        <div class="school-name">
+            <div>ALLAMA IQBAL PUBLIC SCHOOL</div>
+            <div>(M.P.M) HASILPUR</div>
+        </div>
+
+        <!-- Hamburger for Sidebar Navigation -->
+
+
+        <!-- Standard Navigation (Desktop) -->
+        <nav>
+             <a href="stu_das.html">DASHBOARD</a>
+            <a href="#">MARKS</a>
+            <a href="Stu_att.html">ATTENDANCE</a>
+            <a href="https://drive.google.com/drive/folders/1hK3dk3VHyIlaujTZi7t2MjAo6Ck4juXc?usp=sharing">E-LIBRARY</a>
+        <button class="admissions-btn" id="logoutBtnSidebar" onclick="logout()">LOGOUT</button>
+        </nav>
+    </div>
+    <!-- Student Info Block -->
+  <!-- Student Information Section -->
+
+<section class="exam-results-section">
+  <h2 class="exam-results-title">Exam Results</h2>
+  <table id="resultsTable" class="exam-results-table" border="1" cellspacing="0" cellpadding="8">
+    <thead class="exam-results-thead">
+      <tr class="exam-results-tr">
+        <th class="exam-results-th">Exam</th>
+        <th class="exam-results-th">T.M</th>
+        <th class="exam-results-th">O.M</th>
+        <th class="exam-results-th">%age</th>
+      </tr>
+    </thead>
+    <tbody class="exam-results-tbody">
+      <!-- Results rows will be appended here dynamically -->
+    </tbody>
+  </table>
+</section>
+
+  </main>
+ <!-- =================== Footer =================== -->
+       <footer class="footer">
+        <div class="footer-content">
+            <p>Contact Us</p>
+            <ul class="footer-links">
+                <li>
+                    <a href="tel:+923057936514">
+                        <img src="Photoes/Call-Icon.png" alt="Call" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:zafar.iqbal.aips@gmail.com">
+                        <img src="Photoes/Mail-Icon.png" alt="Mail" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/AllamaIqbalPublicSchools" target="_blank" rel="noopener noreferrer">
+                        <img src="Photoes/Facebook-Icon.png" alt="Facebook" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://wa.me/923404402716" target="_blank" rel="noopener noreferrer">
+                        <img src="Photoes/Whatsapp-Icon.png" alt="WhatsApp" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/allama_iqbal_public_schools?igsh=MXJuanh1OW4ycTZnZw==" target="_blank" rel="noopener noreferrer">
+                        <img src="Photoes/Inta-Icon.png" alt="Instagram" width="30" height="30">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        <div class="footer-dev">
+        <p>Developed By : Muhammad Ahmad Hasham</p>
+        </div>
+    </footer>
+
+
+
+</body>
+    <!-- =================== Scripts =================== -->
+    <script src="Animation.js"></script>
+    <script src="result.js"></script>
+      <script src="front.js"></script>
+
+</html>
+

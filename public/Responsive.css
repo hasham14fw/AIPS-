@@ -1,0 +1,380 @@
+/*Contact Details */
+.top-bar {
+    background: #0c005b;
+    color: white;
+    padding: 3px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+.top-bar.h{
+  font-size: 10px;
+}
+.contact-info {
+    font-size: 6px;
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+       padding: 4px 10px;
+        font-size: 14px;
+    }
+    .contact-info {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-bar {
+        padding: 1px 10px;
+        font-size: 12px;
+    }
+    .contact-info {
+        font-size: 7px;
+    }
+}
+
+/*Top line of portals */
+
+.hamburger {
+    display: none; /* hide on laptops and above */
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #0c005b;
+    z-index: 1001;
+    margin-left: 10px;
+    padding: 4px 8px;
+}
+
+
+/* Specific hamburger for portal bar to keep it white */
+#portal-hamburger {
+    color: white;
+}
+
+/* HEADER SIDEBAR (slides from left) */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -260px; /* hidden by default */
+    width: 180px;
+    height: 100%;
+    background: #0c005b;
+    color: white;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-left: 10px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    
+}
+
+.sidebar.active {
+    right: 0;
+    
+}
+
+.sidebar a,
+.sidebar .admissions-btn {
+    color: white;
+    text-decoration: none;
+    margin: 15px 10px;
+    font-size: 18px;
+}
+
+.sidebar .admissions-btn {
+    background: red;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sidebar .admissions-btn:hover {
+    background: #ff2525;
+}
+
+/* PORTAL SIDEBAR (slides from right) */
+.portal-sidebar {
+    position: fixed;
+    top: 0;
+    right: -260px; /* hidden by default */
+    width: 180px;
+    height: 100%;
+    background: #0c005b;
+    color: white;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.portal-sidebar.active {
+    right: 0; /* slide in */
+}
+
+.portal-sidebar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.portal-sidebar a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive: hide nav and portal links, show hamburgers */
+@media (max-width: 768px) {
+    
+      #portal-hamburger {
+        display: block; /* show portal hamburger on mobile */
+    }
+    .header nav {
+        display: none;
+    }
+    .portal-links {
+        display: none;
+    }
+    .hamburger {
+        display: block;
+    }
+}
+
+/* =======================  Resut page  ======================= */
+
+@media (max-width: 480px) {
+    .hero-result {
+        width: 75%;
+        padding: 50px 13px; /* extra side padding for smallest screens */
+        margin-bottom: 50 px; /* ensure space for fixed elements */
+
+    }
+    .hero-result .search-input {
+        width: 83%; /* full width for search input */
+        padding: 10px; /* more padding for better touch targets */
+    }
+    .hero-result .admissions-btn {
+        padding: 10px 93px; /* larger button for easier clicking */
+    }
+}
+
+
+/* Responsive hero section and background */
+
+
+
+/* Responsive styles for the logo and Name */
+@media (max-width: 768px) {
+  .header {
+    height: 80px;
+    }
+    .header img {
+        width: 85px;
+        height: auto;
+        margin-right: 90px;
+    }
+
+    .school-name {
+        font-size: 22px;
+        margin-right: 0px;
+        margin-left: -80px;
+    }
+
+    .school-name div:last-child {
+        font-size: 12px;
+    }
+}
+  @media (max-width: 480px) {
+    .school-name {
+        font-size: 20px;
+        margin-right: 0px;
+}    .header img {
+        margin-right: 78px;
+    }
+}
+/* Responsive styles for the Animated Text and Backgroung*/
+@media (max-width: 768px) {
+    .hero {
+        padding: 100px 150px; /* reduce padding for smaller screens */
+        background-position: center top; /* keep subject visible */
+        text-align: left;
+    }
+
+    .hero h1 {
+        font-size: 32px; /* reduce heading size */
+        text-align: center; /* center for better alignment */
+        text-align: left;
+    }
+
+    .hero p {
+        font-size: 16px; /* reduce paragraph size */
+        max-width: 90%; /* allow it to fit within screen */
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 50px 10px; /* further reduce padding */
+        padding-bottom: 140px; /* ensure space for fixed elements */
+    }
+
+    .hero h1 {
+        font-size: 35px; /* smaller heading for very small devices */
+    }
+
+    .hero p {
+        font-size: 20px;
+        margin-left: 6px; /* adjust margin for smaller screens */
+    }
+}
+
+@keyframes rotateBorder {
+    0% {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+    }
+    25% {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 0%);
+    }
+    50% {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    75% {
+        clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 0%);
+    }
+    100% {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+    }
+}
+
+
+@media (max-width: 768px) {
+   
+.sidebar .admissions-btn {
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    background: transparent;
+    color: rgb(128, 255, 0);
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-weight: bold;
+    overflow: hidden;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.sidebar .admissions-btn::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 3px solid rgb(128, 255, 0);
+    border-radius: 4px;
+    box-sizing: border-box;
+    animation: rotateBorder 2s linear infinite;
+    z-index: -1;
+}
+
+.sidebar .admissions-btn:hover::before {
+    animation: none;
+    background: rgb(128, 255, 0);
+}
+
+.sidebar .admissions-btn:hover {
+    color: white;
+}
+}
+/* ✅ Responsive tweaks */
+@media (max-width: 768px) {
+  .footer-content p {
+    font-size: 14px;
+  }
+
+  .footer-links {
+    gap: 20px;
+  }
+
+  .footer-links img {
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+    .footer p {
+    font-size: 13px;
+  }
+  .footer-content p {
+    font-size: 18px;
+  }
+
+  .footer-links img {
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+  }
+}
+
+
+
+
+.hamburger.on-top {
+  position: relative; /* or fixed/absolute depending on your layout */
+  z-index: 1001; /* higher than sidebar */
+  background: white; /* or any contrasting color */
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+
+
+
+@media (max-width: 480px) {
+   
+.portal-sidebar .admissions-btn {
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    background: transparent;
+    color: #0aebff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-weight: bold;
+    overflow: hidden;
+    border-radius: 4px;
+    z-index: 1;
+    margin:  10px;
+    margin-top: 180%; /* Adjust margin to ensure visibility */
+    margin-bottom: 20px; /* Adjust margin to ensure visibility */
+}
+
+.portal-sidebar .admissions-btn::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 3px solid #0aebff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    animation: rotateBorder 2s linear infinite;
+    z-index: -1;
+}
+
+.portal-sidebar .admissions-btn:hover::before {
+    animation: none;
+    background: #0aebff;
+}
+
+.portal-sidebar .admissions-btn:hover {
+    color: white;
+}
+}

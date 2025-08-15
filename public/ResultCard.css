@@ -1,0 +1,107 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-center {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Shared Styles */
+#student-info,
+#marks-container,
+#summary {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(90, 208, 255, 0.6);
+    width: 90%;
+    max-width: 600px;
+    animation-duration: 0.8s;
+    animation-fill-mode: both;
+}
+
+/* Animations */
+@keyframes slideFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Specific containers with animations */
+#student-info {
+    animation-name: slideFromLeft;
+}
+
+#marks-container {
+    animation-name: slideFromRight;
+}
+
+#summary {
+    animation-name: slideFromLeft;
+}
+
+/* Headings and text styling */
+#student-info h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+    color: #0c005b;
+    text-align: center;
+}
+
+#student-info p,
+#summary p {
+    margin: 6px 0;
+    font-size: 20px;
+}
+
+/* Subject table styling */
+.subject-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.subject-table th, .subject-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.subject-table th {
+    background-color: #0c005b;
+    color: white;
+}
+
+.subject-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #student-info,
+    #marks-container,
+    #summary {
+        width: 95%;
+    }
+}
