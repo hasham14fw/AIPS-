@@ -65,7 +65,7 @@ window.onload = async () => {
 
  // Set summary sta
 window.addEventListener('DOMContentLoaded', () => {
-  fetch('${backendURL}/latest-news')
+  fetch(`${backendURL}/latest-news`)
     .then(res => res.json())
     .then(data => {
       document.getElementById('news-paragraph').textContent = data.content;
