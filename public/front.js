@@ -1,6 +1,5 @@
 const backendURL = 'https://aips-cizk.onrender.com';
 
-
 //============================= Loader Functions =============================
 function showLoading() {
   const overlay = document.getElementById('loading-overlay');
@@ -31,7 +30,7 @@ if (studentLoginForm) {
     const password = document.getElementById('password').value.trim();
     const errorMessage = document.getElementById('error-message');
 
-    try { 
+    try {
       const response = await fetch(`${backendURL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -165,7 +164,7 @@ if (document.getElementById('name')) {
 
 function logout() {
   localStorage.removeItem('token');
-  window.location.href = 'student.html';
+  window.location.href = 'Student.html';
 }
 
 //=============================  Student Attendance =============================
@@ -206,12 +205,11 @@ if (document.querySelector('#attendanceTable tbody')) {
   });
 }
 
-
-
 //=============================  Student Result Portal =============================
-const regNumber = new URLSearchParams(window.location.search).get('reg');
+document.addEventListener('DOMContentLoaded', async () => {
+  const regNumber = new URLSearchParams(window.location.search).get('reg');
   const nameEl = document.getElementById('name');
-  if (!nameEl) return; // Not a result page
+  if (!nameEl || !regNumber) return; // Not a result page
 
   try {
     const response = await fetch(`${backendURL}/result?reg=${regNumber}`);
@@ -245,29 +243,28 @@ const regNumber = new URLSearchParams(window.location.search).get('reg');
       for (const subject in marks) {
         const obtained = marks[subject] ?? 'N/A';
         const total = totalMarks[subject] ?? 'N/A';
-
-        const row = `
+        tableBody.innerHTML += `
           <tr>
             <td>${subject}</td>
             <td>${obtained}</td>
             <td>${total}</td>
           </tr>`;
-        tableBody.innerHTML += row;
       }
     }
 
     // Set summary stats
     document.getElementById('totalObt').textContent = data.totalObtainedSum ?? '0';
     document.getElementById('totalMax').textContent = data.totalMaxSum ?? '0';
-    document.getElementById('percentage').textContent = data.percentage != null ? data.percentage + '%' : 'N/A';
+    document.getElementById('percentage').textContent =
+      data.percentage != null ? data.percentage + '%' : 'N/A';
 
   } catch (error) {
     console.error('Error loading result:', error);
     alert('Failed to fetch result.');
   }
-};
+});
 
- // Set summary sta
+//============================= Latest News =============================
 window.addEventListener('DOMContentLoaded', () => {
   fetch(`${backendURL}/latest-news`)
     .then(res => res.json())
@@ -278,5 +275,3 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('news-paragraph').textContent = "Failed to load news.";
     });
 });
-
-
