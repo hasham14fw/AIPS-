@@ -1,7 +1,7 @@
-// ============================= Config =============================
 const backendURL = 'https://aips-cizk.onrender.com';
 
-// ============================= Loader Functions =============================
+
+//============================= Loader Functions =============================
 function showLoading() {
   const overlay = document.getElementById('loading-overlay');
   if (overlay) overlay.style.display = 'flex';
@@ -17,13 +17,13 @@ function showAlertWithLoading(message) {
   setTimeout(() => {
     hideLoading();
     alert(message);
-  }, 600);
+  }, 600); // small delay so spinner is visible
 }
 
-// ============================= Student Login =============================
+//=============================  Student Login =============================
 const studentLoginForm = document.getElementById('loginForm');
 if (studentLoginForm) {
-  studentLoginForm.addEventListener('submit', async e => {
+  studentLoginForm.addEventListener('submit', async function (e) {
     e.preventDefault();
     showLoading();
 
@@ -31,21 +31,21 @@ if (studentLoginForm) {
     const password = document.getElementById('password').value.trim();
     const errorMessage = document.getElementById('error-message');
 
-    try {
-      const res = await fetch(`${backendURL}/login`, {
+    try { 
+      const response = await fetch(`${backendURL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reg, password })
       });
 
-      const data = await res.json();
+      const result = await response.json();
       hideLoading();
 
-      if (res.ok && data.token) {
-        localStorage.setItem('token', data.token);
+      if (response.ok && result.token) {
+        localStorage.setItem('token', result.token);
         window.location.href = 'stu_das.html';
       } else {
-        errorMessage.textContent = data.error || 'Login failed. Try again.';
+        errorMessage.textContent = result.error || 'Login failed. Try again.';
       }
     } catch (err) {
       hideLoading();
@@ -55,10 +55,10 @@ if (studentLoginForm) {
   });
 }
 
-// ============================= Teacher Login =============================
+//=============================  Teacher Login =============================
 const teacherLoginForm = document.getElementById('teacherLoginForm');
 if (teacherLoginForm) {
-  teacherLoginForm.addEventListener('submit', async e => {
+  teacherLoginForm.addEventListener('submit', async function (e) {
     e.preventDefault();
     showLoading();
 
@@ -67,30 +67,30 @@ if (teacherLoginForm) {
     const errorMessage = document.getElementById('teacherError');
 
     try {
-      const res = await fetch(`${backendURL}/teacher-login`, {
+      const response = await fetch(`${backendURL}/teacher-login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reg, password })
       });
 
-      const data = await res.json();
+      const result = await response.json();
       hideLoading();
 
-      if (res.ok && data.token) {
-        localStorage.setItem('teacherToken', data.token);
+      if (response.ok && result.token) {
+        localStorage.setItem('teacherToken', result.token);
         window.location.href = 'teacher_dash.html';
       } else {
-        errorMessage.textContent = data.error || 'Login failed. Try again.';
+        errorMessage.textContent = result.error || 'Login failed. Try again.';
       }
     } catch (err) {
       hideLoading();
-      console.error('Teacher login error:', err);
+      console.error('Server Error', err);
       errorMessage.textContent = 'Server error. Please try again later.';
     }
   });
 }
 
-// ============================= Teacher Dashboard =============================
+//=============================  Teacher Dashboard =============================
 function teacherLogout() {
   localStorage.removeItem('teacherToken');
   window.location.href = 'TeacherPortal.html';
@@ -103,23 +103,23 @@ if (document.getElementById('teacher_name')) {
 
     try {
       showLoading();
-      const res = await fetch(`${backendURL}/teacher`, {
-        headers: { Authorization: `Bearer ${token}` }
+      const response = await fetch(`${backendURL}/teacher`, {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      if (!res.ok) {
+      if (!response.ok) {
         hideLoading();
         localStorage.removeItem('teacherToken');
         return window.location.href = 'teacher.html';
       }
 
-      const teacher = await res.json();
+      const teacher = await response.json();
       hideLoading();
-
       document.getElementById('teacher_name').textContent = teacher.name || 'N/A';
       document.getElementById('teacher_reg').textContent = teacher.reg || 'N/A';
       document.getElementById('teacher_fname').textContent = teacher.fname || 'N/A';
       document.getElementById('teacher_class').textContent = teacher.class || 'N/A';
+
     } catch (err) {
       hideLoading();
       console.error('Error loading teacher:', err);
@@ -129,33 +129,30 @@ if (document.getElementById('teacher_name')) {
   });
 }
 
-// ============================= Student Dashboard =============================
-function logout() {
-  localStorage.removeItem('token');
-  window.location.href = 'student.html';
-}
-
+//=============================  Student Dashboard =============================
 if (document.getElementById('name')) {
   document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
-    if (!token) return showAlertWithLoading('Session expired. Please log in again.');
+    if (!token) {
+      return showAlertWithLoading('Session expired. Please log in again.');
+    }
 
     try {
       showLoading();
       const res = await fetch(`${backendURL}/student`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${token}` }
       });
 
       if (!res.ok) throw new Error('Failed to fetch student info');
 
       const student = await res.json();
       hideLoading();
-
       document.getElementById('name').textContent = student.name || '';
       document.getElementById('reg').textContent = student.reg || '';
       document.getElementById('fname').textContent = student.fname || '';
       document.getElementById('class').textContent = student.classes || '';
       document.getElementById('dob').textContent = student.dob || '';
+
     } catch (err) {
       hideLoading();
       console.error('Error fetching student info:', err);
@@ -166,7 +163,12 @@ if (document.getElementById('name')) {
   });
 }
 
-// ============================= Student Attendance =============================
+function logout() {
+  localStorage.removeItem('token');
+  window.location.href = 'student.html';
+}
+
+//=============================  Student Attendance =============================
 if (document.querySelector('#attendanceTable tbody')) {
   document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
@@ -174,13 +176,13 @@ if (document.querySelector('#attendanceTable tbody')) {
 
     try {
       showLoading();
-      const res = await fetch(`${backendURL}/api/student-attendance`, {
-        headers: { Authorization: `Bearer ${token}` }
+      const resAttendance = await fetch(`${backendURL}/api/student-attendance`, {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      if (!res.ok) throw new Error('Failed to fetch attendance');
+      if (!resAttendance.ok) throw new Error('Failed to fetch attendance');
 
-      const attendance = await res.json();
+      const attendance = await resAttendance.json();
       const tbody = document.querySelector('#attendanceTable tbody');
       tbody.innerHTML = '';
 
@@ -195,6 +197,7 @@ if (document.querySelector('#attendanceTable tbody')) {
         tbody.appendChild(tr);
       });
       hideLoading();
+
     } catch (err) {
       hideLoading();
       console.error('Error fetching attendance:', err);
@@ -203,71 +206,77 @@ if (document.querySelector('#attendanceTable tbody')) {
   });
 }
 
-// ============================= Student Result Portal =============================
-if (document.getElementById('marksTableBody')) {
-  document.addEventListener('DOMContentLoaded', async () => {
-    const regNumber = new URLSearchParams(window.location.search).get('reg');
-    if (!regNumber) return;
 
-    try {
-      const res = await fetch(`${backendURL}/result?reg=${regNumber}`);
-      const data = await res.json();
 
-      if (data.error) {
-        alert(data.error);
-        return;
-      }
+//=============================  Student Result Portal =============================
+const regNumber = new URLSearchParams(window.location.search).get('reg');
+  const nameEl = document.getElementById('name');
+  if (!nameEl) return; // Not a result page
 
-      document.getElementById('name').textContent = data.name || 'N/A';
-      document.getElementById('fname').textContent = data.fname || data.fatherName || 'N/A';
-      document.getElementById('reg').textContent = data.reg || 'N/A';
-      document.getElementById('examType').textContent = data.examType || 'N/A';
-      document.getElementById('examDate').textContent = data.examDate
-        ? new Date(data.examDate).toLocaleDateString()
-        : 'N/A';
-      document.getElementById('class').textContent = data.class || 'N/A';
+  try {
+    const response = await fetch(`${backendURL}/result?reg=${regNumber}`);
+    const data = await response.json();
 
-      const tableBody = document.getElementById('marksTableBody');
-      tableBody.innerHTML = '';
-      const marks = data.marks || {};
-      const totalMarks = data.totalMarksPerSubject || {};
-
-      if (Object.keys(marks).length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="3">No marks data available</td></tr>`;
-      } else {
-        for (const subject in marks) {
-          const obtained = marks[subject] ?? 'N/A';
-          const total = totalMarks[subject] ?? 'N/A';
-          tableBody.innerHTML += `
-            <tr>
-              <td>${subject}</td>
-              <td>${obtained}</td>
-              <td>${total}</td>
-            </tr>`;
-        }
-      }
-
-      document.getElementById('totalObt').textContent = data.totalObtainedSum ?? '0';
-      document.getElementById('totalMax').textContent = data.totalMaxSum ?? '0';
-      document.getElementById('percentage').textContent =
-        data.percentage != null ? data.percentage + '%' : 'N/A';
-    } catch (err) {
-      console.error('Error loading result:', err);
-      alert('Failed to fetch result.');
+    if (data.error) {
+      alert(data.error);
+      return;
     }
-  });
-}
 
-// ============================= Latest News =============================
-if (document.getElementById('news-paragraph')) {
-  window.addEventListener('DOMContentLoaded', () => {
-    fetch(`${backendURL}/latest-news`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('news-paragraph').textContent = data.content || 'No news available.';
-      })
-      .catch(() => {
-        document.getElementById('news-paragraph').textContent = 'Failed to load news.';
-      });
-  });
-}
+    // Set basic student info
+    document.getElementById('name').textContent = data.name || 'N/A';
+    document.getElementById('fname').textContent = data.fname || data.fatherName || 'N/A';
+    document.getElementById('reg').textContent = data.reg || 'N/A';
+    document.getElementById('examType').textContent = data.examType || 'N/A';
+    document.getElementById('examDate').textContent = data.examDate
+      ? new Date(data.examDate).toLocaleDateString()
+      : 'N/A';
+    document.getElementById('class').textContent = data.class || 'N/A';
+
+    // Load marks table
+    const tableBody = document.getElementById('marksTableBody');
+    tableBody.innerHTML = '';
+
+    const marks = data.marks || {};
+    const totalMarks = data.totalMarksPerSubject || {};
+
+    if (Object.keys(marks).length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="3">No marks data available</td></tr>`;
+    } else {
+      for (const subject in marks) {
+        const obtained = marks[subject] ?? 'N/A';
+        const total = totalMarks[subject] ?? 'N/A';
+
+        const row = `
+          <tr>
+            <td>${subject}</td>
+            <td>${obtained}</td>
+            <td>${total}</td>
+          </tr>`;
+        tableBody.innerHTML += row;
+      }
+    }
+
+    // Set summary stats
+    document.getElementById('totalObt').textContent = data.totalObtainedSum ?? '0';
+    document.getElementById('totalMax').textContent = data.totalMaxSum ?? '0';
+    document.getElementById('percentage').textContent = data.percentage != null ? data.percentage + '%' : 'N/A';
+
+  } catch (error) {
+    console.error('Error loading result:', error);
+    alert('Failed to fetch result.');
+  }
+};
+
+ // Set summary sta
+window.addEventListener('DOMContentLoaded', () => {
+  fetch(`${backendURL}/latest-news`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('news-paragraph').textContent = data.content;
+    })
+    .catch(() => {
+      document.getElementById('news-paragraph').textContent = "Failed to load news.";
+    });
+});
+
+
