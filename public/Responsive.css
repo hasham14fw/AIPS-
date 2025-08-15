@@ -195,10 +195,14 @@
 }
   @media (max-width: 480px) {
     .school-name {
-        font-size: 20px;
+        font-size: 21px;
         margin-right: 0px;
 }    .header img {
-        margin-right: 78px;
+        margin-right: 88px;
+    }
+      .header {
+    padding-bottom: 20px;
+    padding-top:20px ;
     }
 }
 /* Responsive styles for the Animated Text and Backgroung*/
@@ -224,7 +228,7 @@
 
 @media (max-width: 480px) {
     .hero {
-        padding: 50px 10px; /* further reduce padding */
+        padding: 120px 10px; /* further reduce padding */
         padding-bottom: 140px; /* ensure space for fixed elements */
     }
 
