@@ -17,9 +17,9 @@ app.listen(port, '0.0.0.0', () => {
 
 
 
-app.get('/', (req, res) => {
-  res.send('Server is up and running ✅');
-});
+// app.get('/', (req, res) => {
+//   res.send('Server is up and running ✅');
+// });
 
 // ===== Middleware =====
 app.use(cors());
