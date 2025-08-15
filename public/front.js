@@ -1,4 +1,4 @@
-const backendURL = 'aips-hsp.com';
+const backendURL = 'www.aips-hsp.com';
 
 //============================= Loader Functions =============================
 function showLoading() {
