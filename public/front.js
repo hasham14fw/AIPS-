@@ -1,5 +1,6 @@
 const backendURL = 'https://aips-cizk.onrender.com';
 
+
 //============================= Loader Functions =============================
 function showLoading() {
   const overlay = document.getElementById('loading-overlay');
@@ -30,7 +31,7 @@ if (studentLoginForm) {
     const password = document.getElementById('password').value.trim();
     const errorMessage = document.getElementById('error-message');
 
-    try {
+    try { 
       const response = await fetch(`${backendURL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -157,14 +158,14 @@ if (document.getElementById('name')) {
       console.error('Error fetching student info:', err);
       showAlertWithLoading('Error loading student info. Please log in again.');
       localStorage.removeItem('token');
-      window.location.href = 'student.html';
+      window.location.href = 'Student.html';
     }
   });
 }
 
 function logout() {
   localStorage.removeItem('token');
-  window.location.href = 'Student.html';
+  window.location.href = 'student.html';
 }
 
 //=============================  Student Attendance =============================
@@ -205,73 +206,6 @@ if (document.querySelector('#attendanceTable tbody')) {
   });
 }
 
-//=============================  Student Result Portal =============================
-document.addEventListener('DOMContentLoaded', async () => {
-  const regNumber = new URLSearchParams(window.location.search).get('reg');
-  const nameEl = document.getElementById('name');
-  if (!nameEl || !regNumber) return; // Not a result page
 
-  try {
-    const response = await fetch(`${backendURL}/result?reg=${regNumber}`);
-    const data = await response.json();
 
-    if (data.error) {
-      alert(data.error);
-      return;
-    }
 
-    // Set basic student info
-    document.getElementById('name').textContent = data.name || 'N/A';
-    document.getElementById('fname').textContent = data.fname || data.fatherName || 'N/A';
-    document.getElementById('reg').textContent = data.reg || 'N/A';
-    document.getElementById('examType').textContent = data.examType || 'N/A';
-    document.getElementById('examDate').textContent = data.examDate
-      ? new Date(data.examDate).toLocaleDateString()
-      : 'N/A';
-    document.getElementById('class').textContent = data.class || 'N/A';
-
-    // Load marks table
-    const tableBody = document.getElementById('marksTableBody');
-    tableBody.innerHTML = '';
-
-    const marks = data.marks || {};
-    const totalMarks = data.totalMarksPerSubject || {};
-
-    if (Object.keys(marks).length === 0) {
-      tableBody.innerHTML = `<tr><td colspan="3">No marks data available</td></tr>`;
-    } else {
-      for (const subject in marks) {
-        const obtained = marks[subject] ?? 'N/A';
-        const total = totalMarks[subject] ?? 'N/A';
-        tableBody.innerHTML += `
-          <tr>
-            <td>${subject}</td>
-            <td>${obtained}</td>
-            <td>${total}</td>
-          </tr>`;
-      }
-    }
-
-    // Set summary stats
-    document.getElementById('totalObt').textContent = data.totalObtainedSum ?? '0';
-    document.getElementById('totalMax').textContent = data.totalMaxSum ?? '0';
-    document.getElementById('percentage').textContent =
-      data.percentage != null ? data.percentage + '%' : 'N/A';
-
-  } catch (error) {
-    console.error('Error loading result:', error);
-    alert('Failed to fetch result.');
-  }
-});
-
-//============================= Latest News =============================
-window.addEventListener('DOMContentLoaded', () => {
-  fetch(`${backendURL}/latest-news`)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('news-paragraph').textContent = data.content;
-    })
-    .catch(() => {
-      document.getElementById('news-paragraph').textContent = "Failed to load news.";
-    });
-});
