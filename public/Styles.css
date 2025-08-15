@@ -592,7 +592,13 @@ main {
     text-align: center;
     margin: 20px 10px;
 }
-
+.portal-name h1 {
+    font-size: 38px;
+    color: #0c005b; /* navy blue */
+    font-weight: bold;
+    text-align: center;
+    margin: 30px 10px;
+}
 .hero-result {
     display: flex;
     flex-direction: column;

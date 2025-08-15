@@ -11,11 +11,13 @@ require('./health')(app);
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 app.listen(port, '0.0.0.0', () => {
   console.log(`✅ Server running on port ${port}`);
 });
-
+app.get('/', (req, res) => {
+  res.send('Server is up and running ✅');
+});
 
 // ===== Middleware =====
 app.use(cors());
