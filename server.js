@@ -7,11 +7,15 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
-
+require('./health')(app);
 
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
+app.listen(port, '0.0.0.0', () => {
+  console.log(`✅ Server running on port ${port}`);
+});
+
 
 // ===== Middleware =====
 app.use(cors());
@@ -209,6 +213,12 @@ app.post('/api/attendance', async (req, res) => {
         res.status(500).json({ error: 'Error submitting attendance' });
     }
 });
+
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 
 // ✅ Get Students by Class (SECURE)
 app.get('/api/students', authenticateToken, async (req, res) => {
