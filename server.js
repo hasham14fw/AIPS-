@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
-require('./health')(app);
 
 dotenv.config();
 const app = express();
@@ -217,9 +216,11 @@ app.post('/api/attendance', async (req, res) => {
 });
 
 
+// server.js
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
+
 
 
 // ✅ Get Students by Class (SECURE)
