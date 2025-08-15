@@ -14,6 +14,9 @@ const port = process.env.PORT || 10000;
 app.listen(port, '0.0.0.0', () => {
   console.log(`✅ Server running on port ${port}`);
 });
+
+
+
 app.get('/', (req, res) => {
   res.send('Server is up and running ✅');
 });
@@ -23,6 +26,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 // ===== MongoDB Setup =====
 const client = new MongoClient(process.env.MONGODB_URI);
 let db;
