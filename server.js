@@ -176,8 +176,8 @@ app.post('/apply', async (req, res) => {
     }
 
     if (!db) {
-      console.error("❌ Database not connected yet");
-      return res.status(500).json({ error: 'Database not connected' });
+      console.error("Visit Office for Admission");
+      return res.status(500).json({ error: 'Visit Office for Admission' });
     }
 
     const result = await db.collection('admission').insertOne({
@@ -192,7 +192,7 @@ app.post('/apply', async (req, res) => {
 
     if (!result.insertedId) {
       console.error("❌ Insert failed", result);
-      return res.status(500).json({ error: 'Failed to save application' });
+      return res.status(500).json({ error: 'Visit Office for Admission' });
     }
 
     res.status(201).json({ message: 'Application submitted successfully!' });
