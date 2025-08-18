@@ -166,41 +166,21 @@ app.get('/latest-news', async (req, res) => {
 });
 
 // ✅ Submit Admission Form
-// ===== Submit Admission Form =====
 app.post('/apply', async (req, res) => {
-  try {
-    const { name, fname, contact, school, classApplied, address } = req.body;
-
-    if (!name || !fname || !contact || !school || !classApplied || !address) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
-
-    if (!db) {
-      console.error("Visit Office for Admission");
-      return res.status(500).json({ error: 'Visit Office for Admission' });
-    }
-
-    const result = await db.collection('admission').insertOne({
-      name,
-      fname,
-      contact,
-      school,
-      classApplied,
-      address,
-      date: new Date()
-    });
-
-    if (!result.insertedId) {
-      console.error("❌ Insert failed", result);
-      return res.status(500).json({ error: 'Visit Office for Admission' });
-    }
-
-    res.status(201).json({ message: 'Application submitted successfully!' });
-  } catch (err) {
-    console.error("❌ Error in /apply route:", err);
-    res.status(500).json({ error: 'Server error while submitting application' });
+  const { name, fname, contact, school, classApplied, address } = req.body;
+  if (!name || !fname || !contact || !school || !classApplied || !address) {
+    return res.status(400).json({ error: 'All fields are required' });
   }
+
+  const result = await db.collection('admission').insertOne({
+    name, fname, contact, school, classApplied, address, date: new Date()
+  });
+
+  if (!result.insertedId) return res.status(500).json({ error: 'Failed to save application' });
+  res.status(201).json({ message: 'Application submitted successfully!' });
 });
+
+
 
 
 // ✅ Submit Attendance (per student document)
