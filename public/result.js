@@ -239,7 +239,7 @@ if (document.getElementById('name')) {
 
 function logout() {
   localStorage.removeItem('token');
-  window.location.href = 'student.html';
+  window.location.href = 'Student.html';
 }
 
 //=============================  Student Attendance =============================

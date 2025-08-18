@@ -1,4 +1,6 @@
 
+  const backendURL = 'https://aips-cizk.onrender.com';
+
   document.getElementById('applicationForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -11,7 +13,7 @@
     const message = document.getElementById('message');
 
     try {
-      const res = await fetch('http://localhost:3000/apply', {
+      const res = await fetch(`${backendURL}/apply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, fname, contact, school, classApplied, address })
