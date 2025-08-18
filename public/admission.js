@@ -1,36 +1,43 @@
+const backendURL = 'https://aips-cizk.onrender.com';
 
-  const backendURL = 'https://aips-cizk.onrender.com';
+document.getElementById('applicationForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-  document.getElementById('applicationForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const fname = document.getElementById('fname').value.trim();
+  const contact = document.getElementById('contact').value.trim();
+  const school = document.getElementById('school').value.trim();
+  const classApplied = document.getElementById('class').value.trim();
+  const address = document.getElementById('address').value.trim();
+  const message = document.getElementById('message');
 
-    const name = document.getElementById('name').value;
-    const fname = document.getElementById('fname').value;
-    const contact = document.getElementById('contact').value;
-    const school = document.getElementById('school').value;
-    const classApplied = document.getElementById('class').value;
-    const address = document.getElementById('address').value;
-    const message = document.getElementById('message');
+  try {
+    const res = await fetch(`${backendURL}/apply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, fname, contact, school, classApplied, address })
+    });
 
+    // Try to parse JSON safely
+    let result = {};
     try {
-      const res = await fetch(`${backendURL}/apply`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, fname, contact, school, classApplied, address })
-      });
-
-      const result = await res.json();
-      message.style.color = res.ok ? 'green' : 'red';
-      message.textContent = result.message || result.error;
-
-      if (res.ok) {
-         alert("✅ Thank you! Your application has been submitted successfully.\n📞 We shall contact you soon.");
-        document.getElementById('applicationForm').reset();
-      }
+      result = await res.json();
     } catch (err) {
-      message.style.color = 'red';
-      message.textContent = 'Server error. Please try again later.';
-      console.error(err);
+      console.warn("Response was not valid JSON", err);
     }
-  });
 
+    if (res.ok) {
+      message.style.color = 'green';
+      message.textContent = result.message || "Application submitted successfully!";
+      alert("✅ Thank you! Your application has been submitted successfully.\n📞 We shall contact you soon.");
+      document.getElementById('applicationForm').reset();
+    } else {
+      message.style.color = 'red';
+      message.textContent = result.error || "Something went wrong. Please try again.";
+    }
+  } catch (err) {
+    message.style.color = 'red';
+    message.textContent = 'Server error. Please try again later.';
+    console.error("Fetch failed:", err);
+  }
+});

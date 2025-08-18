@@ -167,19 +167,33 @@ app.get('/latest-news', async (req, res) => {
 
 // ✅ Submit Admission Form
 app.post('/apply', async (req, res) => {
-  const { name, fname, contact, school, classApplied, address } = req.body;
-  if (!name || !fname || !contact || !school || !classApplied || !address) {
-    return res.status(400).json({ error: 'All fields are required' });
+  try {
+    const { name, fname, contact, school, classApplied, address } = req.body;
+
+    if (!name || !fname || !contact || !school || !classApplied || !address) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const result = await db.collection('admission').insertOne({
+      name,
+      fname,
+      contact,
+      school,
+      classApplied,
+      address,
+      date: new Date()
+    });
+
+    if (!result.insertedId) {
+      return res.status(500).json({ error: 'Failed to save application' });
+    }
+
+    res.status(201).json({ message: 'Application submitted successfully!' });
+  } catch (err) {
+    console.error("Error in /apply:", err);
+    res.status(500).json({ error: 'Internal server error' });
   }
-
-  const result = await db.collection('admission').insertOne({
-    name, fname, contact, school, classApplied, address, date: new Date()
-  });
-
-  if (!result.insertedId) return res.status(500).json({ error: 'Failed to save application' });
-  res.status(201).json({ message: 'Application submitted successfully!' });
 });
-
 
 
 
