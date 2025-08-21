@@ -25,15 +25,16 @@ app.listen(port, '0.0.0.0', () => {
 // });
 
 // ===== Middleware =====
+// ===== Middleware =====
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-
-
-// Teacher authentication middleware
+// ✅ Teacher authentication middleware (must be outside of routes!)
 function authenticateTeacher(req, res, next) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) return res.status(401).json({ error: 'No token provided' });
@@ -54,8 +55,7 @@ function authenticateTeacher(req, res, next) {
   });
 }
 
-
-});
+// ===== Body Parser Middleware =====
 // ===== MongoDB Setup =====
 const client = new MongoClient(process.env.MONGODB_URI);
 let db;
