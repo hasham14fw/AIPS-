@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
+const Attendance = require("../models/Attendance");
+
 
 dotenv.config();
 const app = express();
@@ -197,45 +199,6 @@ app.post('/apply', async (req, res) => {
 
 
 
-// ✅ Submit Attendance (per student document)
-app.post('/api/attendance', async (req, res) => {
-    try {
-        const { attendance } = req.body;
-
-        if (!attendance || !Array.isArray(attendance)) {
-            return res.status(400).json({ error: 'Invalid attendance data' });
-        }
-
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        let insertedCount = 0;
-
-        for (const record of attendance) {
-            // Check if attendance already exists for this student today
-            const exists = await Attendance.findOne({
-                reg: record.reg,
-                date: today
-            });
-
-            if (!exists) {
-                await Attendance.create({
-                    reg: record.reg,
-                    name: record.name,
-                    classes: record.classes,
-                    status: record.status,
-                    date: today
-                });
-                insertedCount++;
-            }
-        }
-
-        res.json({
-            message: `Attendance submitted successfully. ${insertedCount} new record(s) added.`
-        });
-    } catch (error) {
-        console.error('Error submitting attendance:', error);
-        res.status(500).json({ error: 'Error submitting attendance' });
-    }
-});
 
 
 // server.js
@@ -245,9 +208,9 @@ app.get('/health', (req, res) => {
 
 
 
-// ✅ Get Students by Class (SECURE)
-app.get('/api/students', authenticateToken, async (req, res) => {
-  const teacherClass = req.user.teacherClass;
+// Get Students by Teacher's Class
+app.get('/api/students', authenticateToken, verifyTeacher, async (req, res) => {
+  const teacherClass = req.user.classes; // ✅ correct field
   if (!teacherClass) return res.status(400).json({ error: 'Unauthorized access' });
 
   try {
@@ -258,6 +221,35 @@ app.get('/api/students', authenticateToken, async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch students' });
   }
 });
+
+// Submit Attendance
+// ===== Submit Attendance =====
+app.post('/api/attendance', authenticateTeacher, async (req, res) => {
+  try {
+    const { students } = req.body; // array of { reg, name, classes, status }
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+
+    for (const s of students) {
+      await Attendance.findOneAndUpdate(
+        { reg: s.reg, date: today }, // unique per student per day
+        {
+          reg: s.reg,
+          name: s.name,
+          classes: s.classes,
+          status: s.status,
+          date: today,
+        },
+        { upsert: true, new: true }
+      );
+    }
+
+    res.json({ message: "✅ Attendance submitted successfully" });
+  } catch (err) {
+    console.error("❌ Error saving attendance:", err);
+    res.status(500).json({ message: "❌ Failed to submit attendance" });
+  }
+});
+
 
 
 

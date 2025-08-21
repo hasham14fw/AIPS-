@@ -114,11 +114,92 @@
   <!-- =================== Scripts =================== -->
   <script src="Animation.js"></script>
   <script src="result.js"></script>
-  <script src="front.js"></script>
 
   <!-- Attendance Script -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("teacherToken"); 
+  const tableBody = document.getElementById("attendance-table-body");
+  const submitBtn = document.getElementById("submitAttendanceBtn");
+
+  if (!token) {
+    alert("Unauthorized. Please log in again.");
+    window.location.href = "teacher_login.html";
+    return;
+  }
+
+  // Load students
+  try {
+    const res = await fetch("https://aips-cizk.onrender.com/api/students", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!res.ok) throw new Error("Failed to load students");
+
+    const students = await res.json();
+    if (!students.length) {
+      tableBody.innerHTML = `<tr><td colspan="3">No students found.</td></tr>`;
+      return;
+    }
+
+    // Render rows with checkbox (default checked)
+    tableBody.innerHTML = students.map(stu => `
+      <tr>
+        <td>${stu.reg}</td>
+        <td>${stu.name}</td>
+        <td>
+          <input type="checkbox" name="status-${stu.reg}" checked>
+        </td>
+      </tr>
+    `).join("");
+
+  } catch (err) {
+    console.error("Error loading students:", err);
+    alert("Error loading students. Please try again later.");
+  }
+
+  // Submit attendance
+  submitBtn.addEventListener("click", async () => {
+    const rows = tableBody.querySelectorAll("tr");
+    const attendance = [];
+
+    rows.forEach(row => {
+      const reg = row.children[0].textContent.trim();
+      const name = row.children[1].textContent.trim();
+      const status = row.querySelector("input[type=checkbox]").checked;
+
+      attendance.push({ reg, name, status });
+    });
+
+    try {
+      const res = await fetch("https://aips-cizk.onrender.com/api/attendance", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ attendance })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to submit");
+
+      if (data.message === "Attendance already submitted today") {
+        alert("⚠️ Attendance already submitted today. You cannot submit again.");
+      } else {
+        alert("✅ Attendance submitted successfully!");
+      }
+
+    } catch (err) {
+      console.error("Attendance error:", err);
+      alert("❌ Failed to submit attendance.");
+    }
+  });
+});
 
 
+
+</script>
 
 </body>
 </html>

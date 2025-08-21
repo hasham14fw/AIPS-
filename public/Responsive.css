@@ -159,8 +159,9 @@
 
     }
     .hero-result .search-input {
-        width: 83%; /* full width for search input */
-        padding: 10px; /* more padding for better touch targets */
+          padding: 8px; 
+        width: 92%; /* full width for search input */
+      /* more padding for better touch targets */
     }
     .hero-result .admissions-btn {
         padding: 10px 93px; /* larger button for easier clicking */
