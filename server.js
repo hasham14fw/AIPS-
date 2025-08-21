@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
-const Attendance = require("models/Attendance");
+const Attendance = require('./models/Attendance');
+
 
 
 dotenv.config();
