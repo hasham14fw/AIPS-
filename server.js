@@ -33,19 +33,26 @@ app.get('/', (req, res) => {
 
 
 
-// ===== Teacher Authentication Middleware =====
-const authenticateTeacher = (req, res, next) => {
+// Teacher authentication middleware
+function authenticateTeacher(req, res, next) {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Access denied. No token provided.' });
+  if (!authHeader) return res.status(401).json({ error: 'No token provided' });
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, teacher) => {
-    if (err) return res.status(403).json({ message: 'Invalid token' });
-    req.teacher = teacher; // store teacher info in request
+  const token = authHeader.split(' ')[1]; // "Bearer <token>"
+  if (!token) return res.status(401).json({ error: 'Invalid token format' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ error: 'Invalid or expired token' });
+
+    // ensure teacher token only
+    if (!decoded.reg || !decoded.teacherClass) {
+      return res.status(403).json({ error: 'Not authorized as teacher' });
+    }
+
+    req.teacher = decoded; // attach teacher info to request
     next();
   });
-};
-
+}
 
 
 });
