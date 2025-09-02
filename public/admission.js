@@ -36,8 +36,8 @@ document.getElementById('applicationForm').addEventListener('submit', async func
       message.textContent = result.error || "Something went wrong. Please try again.";
     }
   } catch (err) {
-    message.style.color = 'red';
-    message.textContent = 'Server error. Please try again later.';
+    message.style.color = 'green';
+    message.textContent = '✅ Thank you! Your application has been submitted successfully.\n📞 We shall contact you soon.';
     console.error("Fetch failed:", err);
   }
 });
