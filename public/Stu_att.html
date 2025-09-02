@@ -10,7 +10,6 @@
     <link rel="icon" href="Photoes/School Logo.png" type="image/png">
 </head>
 <body>
-  <main>
 
     <!-- =================== Top Bar =================== -->
     <div class="top-bar">
@@ -26,11 +25,11 @@
 
     <!-- =================== Portal Sidebar =================== -->
     <div class="portal-sidebar" id="portal-sidebar">
-            <a href="stu_das.html">DASHBOARD</a>
-            <a href="Stu_marks.html">MARKS</a>
-            <a href="Stu_att.html">ATTENDANCE</a>
-            <a href="https://drive.google.com/drive/folders/1hK3dk3VHyIlaujTZi7t2MjAo6Ck4juXc?usp=sharing">E-LIBRARY</a>
-        <button class="admissions-btn"  onclick="logout()">LOGOUT</button>
+      <a href="teacher_dash.html">HOME</a>
+      <a href="https://forms.gle/TkW5rBBm5pMx1kwp9" onclick="teacherLogout()">REPORT</a>
+      <a href="T_att.html">ATTENDANCE</a>
+      <a href="https://drive.google.com/drive/folders/1hK3dk3VHyIlaujTZi7t2MjAo6Ck4juXc?usp=sharing">E-LIBRARY</a>
+    <button class="admissions-btn"  onclick="teacherLogout()">LOGOUT</button>
     </div>
 
     <!-- =================== Header =================== -->
@@ -51,52 +50,155 @@
 
         <!-- Standard Navigation (Desktop) -->
         <nav>
-             <a href="stu_das.html">DASHBOARD</a>
-            <a href="Stu_marks.html">MARKS</a>
-            <a href="Stu_att.html">ATTENDANCE</a>
-            <a href="https://drive.google.com/drive/folders/1hK3dk3VHyIlaujTZi7t2MjAo6Ck4juXc?usp=sharing">E-LIBRARY</a>
-        <button class="admissions-btn" id="logoutBtnSidebar" onclick="logout()">LOGOUT</button>
+     <a href="teacher_dash.html">HOME</a>
+      <a href="https://forms.gle/TkW5rBBm5pMx1kwp9" onclick="teacherLogout()">REPORT</a>
+      <a href="T_att.html">ATTENDANCE</a>
+      <a href="https://drive.google.com/drive/folders/1hK3dk3VHyIlaujTZi7t2MjAo6Ck4juXc?usp=sharing">E-LIBRARY</a>
+    <button class="admissions-btn" id="logoutBtnSide" onclick="teacherLogout()">LOGOUT</button>
         </nav>
     </div>
-<div class="attendance-containers">
-  <h2 >Attendance Report</h2>
-  <table id="attendanceTable">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Filled dynamically -->
-    </tbody>
-  </table>
-</div>
 
-</main>
+  <!-- =================== Attendance Section =================== -->
+  <div class="attendance-container">
+    <h2>Mark Attendance</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Reg #</th>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="attendance-table-body"></tbody>
+    </table>
+    <button id="submitAttendanceBtn">Submit Attendance</button>
+  </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-      <p>Contact Us</p>
-      <ul class="footer-links">
-        <li><a href="tel:+923053473819"><img src="Photoes/Call-Icon.png" alt="Call" width="30" height="30" /></a></li>
-        <li><a href="mailto:zafar.iqbal.aips@gmail.com"><img src="Photoes/Mail-Icon.png" alt="Mail" width="30" height="30" /></a></li>
-        <li><a href="https://www.facebook.com/AllamaIqbalPublicSchools" target="_blank" rel="noopener noreferrer"><img src="Photoes/Facebook-Icon.png" alt="Facebook" width="30" height="30" /></a></li>
-        <li><a href="https://wa.me/923404402716" target="_blank" rel="noopener noreferrer"><img src="Photoes/Whatsapp-Icon.png" alt="WhatsApp" width="30" height="30" /></a></li>
-        <li><a href="https://www.instagram.com/allama_iqbal_public_schools?igsh=MXJuanh1OW4ycTZnZw==" target="_blank" rel="noopener noreferrer"><img src="Photoes/Inta-Icon.png" alt="Instagram" width="30" height="30" /></a></li>
-      </ul>
-    </div>
-            </div>
+<!-- =================== Footer =================== -->
+       <footer class="footer">
+        <div class="footer-content">
+            <p>Contact Us</p>
+            <ul class="footer-links">
+                <li>
+                    <a href="tel:+923057936514">
+                        <img src="Photoes/Call-Icon.png" alt="Call" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:zafar.iqbal.aips@gmail.com">
+                        <img src="Photoes/Mail-Icon.png" alt="Mail" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/AllamaIqbalPublicSchools" target="_blank" rel="noopener noreferrer">
+                        <img src="Photoes/Facebook-Icon.png" alt="Facebook" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://wa.me/923404402716" target="_blank" rel="noopener noreferrer">
+                        <img src="Photoes/Whatsapp-Icon.png" alt="WhatsApp" width="30" height="30">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/allama_iqbal_public_schools?igsh=MXJuanh1OW4ycTZnZw==" target="_blank" rel="noopener noreferrer">
+                        <img src="Photoes/Inta-Icon.png" alt="Instagram" width="30" height="30">
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div class="footer-dev">
         <p>Developed By : Muhammad Ahmad Hasham</p>
         </div>
-  </footer>
+    </footer> 
 
-
+  <!-- =================== Scripts =================== -->
   <script src="Animation.js"></script>
   <script src="result.js"></script>
-  <script src="front.js"></script>
+
+  <!-- Attendance Script -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("teacherToken"); 
+  const tableBody = document.getElementById("attendance-table-body");
+  const submitBtn = document.getElementById("submitAttendanceBtn");
+
+  if (!token) {
+    alert("Unauthorized. Please log in again.");
+    window.location.href = "teacher_login.html";
+    return;
+  }
+
+  // Load students
+  try {
+    const res = await fetch("http://localhost:5000/api/students", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!res.ok) throw new Error("Failed to load students");
+
+    const students = await res.json();
+    if (!students.length) {
+      tableBody.innerHTML = `<tr><td colspan="3">No students found.</td></tr>`;
+      return;
+    }
+
+    // Render rows with checkbox (default checked)
+    tableBody.innerHTML = students.map(stu => `
+      <tr>
+        <td>${stu.reg}</td>
+        <td>${stu.name}</td>
+        <td>
+          <input type="checkbox" name="status-${stu.reg}" checked>
+        </td>
+      </tr>
+    `).join("");
+
+  } catch (err) {
+    console.error("Error loading students:", err);
+    alert("Error loading students. Please try again later.");
+  }
+
+  // Submit attendance
+  submitBtn.addEventListener("click", async () => {
+    const attendanceRecords = Array.from(tableBody.querySelectorAll("tr")).map(row => {
+      const reg = row.cells[0].textContent.trim();
+      const name = row.cells[1].textContent.trim();
+      const status = row.querySelector("input[type='checkbox']").checked;
+      return { reg, name, status };
+    });
+
+    if (!attendanceRecords.length) {
+      alert("No attendance records to submit.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/attendance", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ attendance: attendanceRecords })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to submit attendance");
+
+      alert(data.message || "Attendance submitted successfully!");
+      // Optionally, disable checkboxes after submission
+      tableBody.querySelectorAll("input[type='checkbox']").forEach(cb => cb.disabled = true);
+      submitBtn.disabled = true;
+
+    } catch (err) {
+      console.error("Error submitting attendance:", err);
+      alert("Error submitting attendance. Check console for details.");
+    }
+  });
+
+});
+</script>
+
 
 </body>
 </html>

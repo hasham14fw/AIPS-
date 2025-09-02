@@ -1,6 +1,7 @@
 
 const backendURL = 'https://aips-cizk.onrender.com';
 
+
 window.onload = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const regNumber = urlParams.get('reg');
@@ -192,7 +193,7 @@ if (document.getElementById('teacher_name')) {
       document.getElementById('teacher_name').textContent = teacher.name || 'N/A';
       document.getElementById('teacher_reg').textContent = teacher.reg || 'N/A';
       document.getElementById('teacher_fname').textContent = teacher.fname || 'N/A';
-      document.getElementById('teacher_class').textContent = teacher.class || 'N/A';
+      document.getElementById('teacher_class').textContent = teacher.classes || 'N/A';
 
     } catch (err) {
       hideLoading();
